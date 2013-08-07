@@ -206,9 +206,8 @@ static struct sdhci_pltfm_data sdhci_pltfm_data_kona = {
 		SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
 };
 
-static const struct of_device_id sdhci_bcm_kona_of_match[] = {
-	{ .compatible = "brcm,kona-sdhci"},
-	{ .compatible = "bcm,kona-sdhci"}, /* deprecated name */
+static struct __initconst of_device_id sdhci_bcm_kona_of_match[] = {
+	{ .compatible = "bcm,kona-sdhci"},
 	{}
 };
 MODULE_DEVICE_TABLE(of, sdhci_bcm_kona_of_match);
@@ -330,7 +329,7 @@ static struct platform_driver sdhci_bcm_kona_driver = {
 		.of_match_table = sdhci_bcm_kona_of_match,
 	},
 	.probe		= sdhci_bcm_kona_probe,
-	.remove		= sdhci_pltfm_unregister,
+	.remove		= sdhci_bcm_kona_remove,
 };
 module_platform_driver(sdhci_bcm_kona_driver);
 
