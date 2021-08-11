@@ -124,3 +124,11 @@ android/configs/android-*.cfg
 #Ignoring Android.bp link file
 #
 Android.bp
+
+# my files
+out/
+kernel.zip
+gcc4.9*/
+clang*/
+AnyKernel*/
+*.log
