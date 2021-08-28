@@ -87,7 +87,7 @@ static int dload_type = SCM_DLOAD_FULLDUMP;
 #ifdef CONFIG_DLOAD_MODE_DEFAULT
 static int download_mode = -1;
 #else
-static int download_mode = 1;
+static int download_mode = 0;
 #endif
 static struct kobject dload_kobj;
 static void *dload_mode_addr, *dload_type_addr;
