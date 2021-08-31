@@ -32,7 +32,8 @@ build_with_clang() {
           CC=clang \
           CLANG_TRIPLE=aarch64-linux-gnu- \
           CROSS_COMPILE=aarch64-linux-android- \
-          CROSS_COMPILE_ARM32=arm-linux-androideabi-"
+          CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+          CROSS_COMPILE_COMPAT=arm-linux-androideabi-"
 
   export PATH="${LOCALDIR}/clang/bin:${LOCALDIR}/gcc4.9/bin:${LOCALDIR}/gcc4.9_32/bin:${PATH}" # clang
   START_TIME=`date +%s`
