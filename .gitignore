@@ -125,10 +125,8 @@ android/configs/android-*.cfg
 #
 Android.bp
 
-# my files
+# My files
+clang/
+gcc4.9/
+gcc4.9_32/
 out/
-kernel.zip
-gcc4.9*/
-clang*/
-AnyKernel*/
-*.log
