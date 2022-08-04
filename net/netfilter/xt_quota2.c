@@ -109,6 +109,25 @@ static void quota2_log(const struct net_device *in,
 	else
 		strlcpy(q->last_iface, "UNKNOWN", QUOTA2_SYSFS_WORK_MAX_SIZE);
 
+	nlh = nlmsg_put(log_skb, /*pid*/0, /*seq*/0, qlog_nl_event,
+			sizeof(*pm), 0);
+	if (!nlh) {
+		pr_err("xt_quota2: nlmsg_put failed\n");
+		kfree_skb(log_skb);
+		return;
+	}
+	pm = nlmsg_data(nlh);
+	memset(pm, 0, sizeof(*pm));
+	if (skb->tstamp.tv64 == 0)
+		__net_timestamp((struct sk_buff *)skb);
+	pm->hook = hooknum;
+	if (prefix != NULL)
+		strlcpy(pm->prefix, prefix, sizeof(pm->prefix));
+	if (in)
+		strlcpy(pm->indev_name, in->name, sizeof(pm->indev_name));
+	if (out)
+		strlcpy(pm->outdev_name, out->name, sizeof(pm->outdev_name));
+
 	schedule_work(&q->work);
 }
 
@@ -136,6 +155,8 @@ static ssize_t quota_proc_write(struct file *file, const char __user *input,
 	if (copy_from_user(buf, input, size) != 0)
 		return -EFAULT;
 	buf[sizeof(buf)-1] = '\0';
+	if (size < sizeof(buf))
+		buf[size] = '\0';
 
 	spin_lock_bh(&e->lock);
 	e->quota = simple_strtoull(buf, NULL, 0);
@@ -321,6 +342,7 @@ static struct xt_match quota_mt2_reg[] __read_mostly = {
 		.match      = quota_mt2,
 		.destroy    = quota_mt2_destroy,
 		.matchsize  = sizeof(struct xt_quota_mtinfo2),
+		.usersize   = offsetof(struct xt_quota_mtinfo2, master),
 		.me         = THIS_MODULE,
 	},
 	{
@@ -331,6 +353,7 @@ static struct xt_match quota_mt2_reg[] __read_mostly = {
 		.match      = quota_mt2,
 		.destroy    = quota_mt2_destroy,
 		.matchsize  = sizeof(struct xt_quota_mtinfo2),
+		.usersize   = offsetof(struct xt_quota_mtinfo2, master),
 		.me         = THIS_MODULE,
 	},
 };
