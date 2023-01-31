@@ -18,14 +18,14 @@ rm -rf $LOCALDIR/build.log
 
 clone_clang() {
     rm -rf $LOCALDIR/clang
-    git clone https://github.com/xiaoxindada/clang.git -b clang-r383902 $LOCALDIR/clang
+    git clone https://github.com/LineageOS/android_prebuilts_clang_kernel_linux-x86_clang-r416183b.git -b lineage-20.0 $LOCALDIR/clang
 }
 
 clone_gcc() {
     rm -rf $LOCALDIR/gcc4.9
     rm -rf $LOCALDIR/gcc4.9_32
-    git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git -b lineage-18.1 $LOCALDIR/gcc4.9
-    git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git -b lineage-18.1 $LOCALDIR/gcc4.9_32
+    git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git -b lineage-19.1 $LOCALDIR/gcc4.9
+    git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git -b lineage-19.1 $LOCALDIR/gcc4.9_32
 }
 
 build_with_clang() {
@@ -65,7 +65,7 @@ build_with_gcc() {
           CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
           CROSS_COMPILE_COMPAT=arm-linux-gnueabi-"
 
-    # export PATH="${LOCALDIR}/gcc4.9/bin:${LOCALDIR}/gcc4.9_32/bin:${PATH}" # gcc
+    export PATH="${LOCALDIR}/gcc4.9/bin:${LOCALDIR}/gcc4.9_32/bin:${PATH}" # gcc
     START_TIME=$(date +%s)
     make $args $defconfig
     make mrproper
