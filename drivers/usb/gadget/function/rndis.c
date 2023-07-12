@@ -653,10 +653,6 @@ static int rndis_set_response(struct rndis_params *params,
 	BufLength = le32_to_cpu(buf->InformationBufferLength);
 	BufOffset = le32_to_cpu(buf->InformationBufferOffset);
 	if ((BufLength > RNDIS_MAX_TOTAL_SIZE) ||
-<<<<<<< HEAD
-=======
-	    (BufOffset > RNDIS_MAX_TOTAL_SIZE) ||
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 	    (BufOffset + 8 >= RNDIS_MAX_TOTAL_SIZE))
 		    return -EINVAL;
 

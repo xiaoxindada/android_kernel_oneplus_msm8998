@@ -99,19 +99,13 @@ enum bpf_prog_type {
 	BPF_PROG_TYPE_XDP,
 	BPF_PROG_TYPE_PERF_EVENT,
 	BPF_PROG_TYPE_CGROUP_SKB,
-<<<<<<< HEAD
-=======
 	BPF_PROG_TYPE_CGROUP_SOCK,
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 };
 
 enum bpf_attach_type {
 	BPF_CGROUP_INET_INGRESS,
 	BPF_CGROUP_INET_EGRESS,
-<<<<<<< HEAD
-=======
 	BPF_CGROUP_INET_SOCK_CREATE,
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 	__MAX_BPF_ATTACH_TYPE
 };
 
@@ -635,13 +629,10 @@ struct bpf_tunnel_key {
 	__u32 tunnel_label;
 };
 
-<<<<<<< HEAD
-=======
 struct bpf_sock {
 	__u32 bound_dev_if;
 };
 
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 /* User return codes for XDP prog type.
  * A valid XDP program must return one of these defined values. All other
  * return codes are reserved for future use. Unknown return codes will result

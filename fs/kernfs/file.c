@@ -740,12 +740,6 @@ err_out:
 static void kernfs_release_file(struct kernfs_node *kn,
 				struct kernfs_open_file *of)
 {
-<<<<<<< HEAD
-	if (!(kn->flags & KERNFS_HAS_RELEASE))
-		return;
-
-	mutex_lock(&of->mutex);
-=======
 	/*
 	 * @of is guaranteed to have no other file operations in flight and
 	 * we just want to synchronize release and drain paths.
@@ -755,7 +749,6 @@ static void kernfs_release_file(struct kernfs_node *kn,
 	 */
 	lockdep_assert_held(&kernfs_open_file_mutex);
 
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 	if (!of->released) {
 		/*
 		 * A file is never detached without being released and we
@@ -765,10 +758,6 @@ static void kernfs_release_file(struct kernfs_node *kn,
 		kn->attr.ops->release(of);
 		of->released = true;
 	}
-<<<<<<< HEAD
-	mutex_unlock(&of->mutex);
-=======
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 }
 
 static int kernfs_fop_release(struct inode *inode, struct file *filp)
@@ -776,16 +765,12 @@ static int kernfs_fop_release(struct inode *inode, struct file *filp)
 	struct kernfs_node *kn = filp->f_path.dentry->d_fsdata;
 	struct kernfs_open_file *of = kernfs_of(filp);
 
-<<<<<<< HEAD
-	kernfs_release_file(kn, of);
-=======
 	if (kn->flags & KERNFS_HAS_RELEASE) {
 		mutex_lock(&kernfs_open_file_mutex);
 		kernfs_release_file(kn, of);
 		mutex_unlock(&kernfs_open_file_mutex);
 	}
 
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 	kernfs_put_open_node(kn, of);
 	seq_release(inode, filp);
 	kfree(of->prealloc_buf);
@@ -818,12 +803,8 @@ void kernfs_drain_open_files(struct kernfs_node *kn)
 		if (kn->flags & KERNFS_HAS_MMAP)
 			unmap_mapping_range(inode->i_mapping, 0, 0, 1);
 
-<<<<<<< HEAD
-		kernfs_release_file(kn, of);
-=======
 		if (kn->flags & KERNFS_HAS_RELEASE)
 			kernfs_release_file(kn, of);
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 	}
 
 	mutex_unlock(&kernfs_open_file_mutex);

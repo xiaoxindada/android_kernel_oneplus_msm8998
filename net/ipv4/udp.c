@@ -513,7 +513,6 @@ static struct sock *udp4_lib_lookup2(struct net *net,
 		if (score > badness) {
 			reuseport = sk->sk_reuseport;
 			if (reuseport) {
-				struct sock *sk2;
 				hash = udp_ehashfn(net, daddr, hnum,
 						   saddr, sport);
 				result = reuseport_select_sock(sk, hash, skb,
@@ -580,7 +579,6 @@ begin:
 		if (score > badness) {
 			reuseport = sk->sk_reuseport;
 			if (reuseport) {
-				struct sock *sk2;
 				hash = udp_ehashfn(net, daddr, hnum,
 						   saddr, sport);
 				result = reuseport_select_sock(sk, hash, skb,

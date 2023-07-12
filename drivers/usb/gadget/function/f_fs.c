@@ -1123,8 +1123,6 @@ ffs_epfile_open(struct inode *inode, struct file *file)
 	file->private_data = epfile;
 	ffs_data_opened(epfile->ffs);
 
-<<<<<<< HEAD
-=======
 	smp_mb__before_atomic();
 	atomic_set(&epfile->error, 0);
 	first_read_done = false;
@@ -1132,7 +1130,6 @@ ffs_epfile_open(struct inode *inode, struct file *file)
 	ffs_log("exit:state %d setup_state %d flag %lu", epfile->ffs->state,
 		epfile->ffs->setup_state, epfile->ffs->flags);
 
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 	return stream_open(inode, file);
 }
 

@@ -506,11 +506,7 @@ retry:
 	}
 	if (!s) {
 		spin_unlock(&sb_lock);
-<<<<<<< HEAD
-		s = alloc_super(type, flags, user_ns);
-=======
 		s = alloc_super(type, (flags & ~MS_SUBMOUNT), user_ns);
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 		if (!s)
 			return ERR_PTR(-ENOMEM);
 		goto retry;
@@ -555,10 +551,6 @@ struct super_block *sget(struct file_system_type *type,
 {
 	struct user_namespace *user_ns = current_user_ns();
 
-<<<<<<< HEAD
-	/* Ensure the requestor has permissions over the target filesystem */
-	if (!(flags & MS_KERNMOUNT) && !ns_capable(user_ns, CAP_SYS_ADMIN))
-=======
 	/* We don't yet pass the user namespace of the parent
 	 * mount through to here so always use &init_user_ns
 	 * until that changes.
@@ -568,7 +560,6 @@ struct super_block *sget(struct file_system_type *type,
 
 	/* Ensure the requestor has permissions over the target filesystem */
 	if (!(flags & (MS_KERNMOUNT|MS_SUBMOUNT)) && !ns_capable(user_ns, CAP_SYS_ADMIN))
->>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 		return ERR_PTR(-EPERM);
 
 	return sget_userns(type, test, set, flags, user_ns, data);
