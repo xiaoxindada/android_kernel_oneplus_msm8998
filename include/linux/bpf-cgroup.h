@@ -1,7 +1,10 @@
 #ifndef _BPF_CGROUP_H
 #define _BPF_CGROUP_H
 
+<<<<<<< HEAD
 #include <linux/bpf.h>
+=======
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 #include <linux/jump_label.h>
 #include <uapi/linux/bpf.h>
 
@@ -55,6 +58,12 @@ int __cgroup_bpf_run_filter(struct sock *sk,
 			    struct sk_buff *skb,
 			    enum bpf_attach_type type);
 
+<<<<<<< HEAD
+=======
+int __cgroup_bpf_run_filter_sk(struct sock *sk,
+			    enum bpf_attach_type type);
+
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 /* Wrappers for __cgroup_bpf_run_filter() guarded by cgroup_bpf_enabled. */
 #define BPF_CGROUP_RUN_PROG_INET_INGRESS(sk,skb)			\
 ({									\
@@ -78,6 +87,19 @@ int __cgroup_bpf_run_filter(struct sock *sk,
 	__ret;								\
 })
 
+<<<<<<< HEAD
+=======
+#define BPF_CGROUP_RUN_PROG_INET_SOCK(sk)				       \
+({									       \
+	int __ret = 0;							       \
+	if (cgroup_bpf_enabled && sk) {					       \
+		__ret = __cgroup_bpf_run_filter_sk(sk,			       \
+						 BPF_CGROUP_INET_SOCK_CREATE); \
+	}								       \
+	__ret;								       \
+})
+
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 #else
 
 struct cgroup_bpf {};
@@ -86,6 +108,10 @@ static inline int cgroup_bpf_inherit(struct cgroup *cgrp) { return 0; }
 
 #define BPF_CGROUP_RUN_PROG_INET_INGRESS(sk,skb) ({ 0; })
 #define BPF_CGROUP_RUN_PROG_INET_EGRESS(sk,skb) ({ 0; })
+<<<<<<< HEAD
+=======
+#define BPF_CGROUP_RUN_PROG_INET_SOCK(sk) ({ 0; })
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 
 #endif /* CONFIG_CGROUP_BPF */
 

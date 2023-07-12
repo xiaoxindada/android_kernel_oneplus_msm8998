@@ -1,5 +1,9 @@
 /* Copyright (c) 2008-2021, The Linux Foundation. All rights reserved.
+<<<<<<< HEAD
  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+=======
+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -2184,6 +2188,15 @@ static int memdesc_sg_virt(struct kgsl_memdesc *memdesc, unsigned long useraddr)
 
 	ret = sg_alloc_table_from_pages(memdesc->sgt, pages, npages,
 					0, memdesc->size, GFP_KERNEL);
+
+	if (ret)
+		goto out;
+
+	ret = kgsl_cache_range_op(memdesc, 0, memdesc->size,
+			KGSL_CACHE_OP_FLUSH);
+
+	if (ret)
+		sg_free_table(memdesc->sgt);
 out:
 	if (ret) {
 		for (i = 0; i < npages; i++)
@@ -2285,6 +2298,7 @@ static int kgsl_setup_dmabuf_useraddr(struct kgsl_device *device,
 			return -EFAULT;
 		}
 
+<<<<<<< HEAD
 		/*
 		 * Take a refcount because dma_buf_put() decrements the
 		 * refcount
@@ -2292,6 +2306,29 @@ static int kgsl_setup_dmabuf_useraddr(struct kgsl_device *device,
 		get_file(vma->vm_file);
 
 		dmabuf = vma->vm_file->private_data;
+=======
+		/* Look for the fd that matches this vma file */
+		fd = iterate_fd(current->files, 0, match_file, vma->vm_file);
+		if (fd) {
+			dmabuf = dma_buf_get(fd - 1);
+			if (IS_ERR(dmabuf)) {
+				up_read(&current->mm->mmap_sem);
+				return PTR_ERR(dmabuf);
+			}
+			/*
+			 * It is possible that the fd obtained from iterate_fd
+			 * was closed before passing the fd to dma_buf_get().
+			 * Hence dmabuf returned by dma_buf_get() could be
+			 * different from vma->vm_file->private_data. Return
+			 * failure if this happens.
+			 */
+			if (dmabuf != vma->vm_file->private_data) {
+				dma_buf_put(dmabuf);
+				up_read(&current->mm->mmap_sem);
+				return -EBADF;
+			}
+		}
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 	}
 
 	if (IS_ERR_OR_NULL(dmabuf)) {

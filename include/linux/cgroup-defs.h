@@ -601,6 +601,10 @@ struct sock_cgroup_data {
 		struct {
 			u8	is_data : 1;
 			u8	no_refcnt : 1;
+<<<<<<< HEAD
+=======
+			u8	unused : 6;
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 			u8	padding;
 			u16	prioidx;
 			u32	classid;
@@ -610,6 +614,10 @@ struct sock_cgroup_data {
 			u32	classid;
 			u16	prioidx;
 			u8	padding;
+<<<<<<< HEAD
+=======
+			u8	unused : 6;
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 			u8	no_refcnt : 1;
 			u8	is_data : 1;
 		} __packed;
@@ -642,7 +650,11 @@ static inline u32 sock_cgroup_classid(struct sock_cgroup_data *skcd)
 static inline void sock_cgroup_set_prioidx(struct sock_cgroup_data *skcd,
 					   u16 prioidx)
 {
+<<<<<<< HEAD
 	struct sock_cgroup_data skcd_buf = { .val = READ_ONCE(skcd->val) };
+=======
+	struct sock_cgroup_data skcd_buf = {{ .val = READ_ONCE(skcd->val) }};
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 
 	if (sock_cgroup_prioidx(&skcd_buf) == prioidx)
 		return;
@@ -659,7 +671,11 @@ static inline void sock_cgroup_set_prioidx(struct sock_cgroup_data *skcd,
 static inline void sock_cgroup_set_classid(struct sock_cgroup_data *skcd,
 					   u32 classid)
 {
+<<<<<<< HEAD
 	struct sock_cgroup_data skcd_buf = { .val = READ_ONCE(skcd->val) };
+=======
+	struct sock_cgroup_data skcd_buf = {{ .val = READ_ONCE(skcd->val) }};
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 
 	if (sock_cgroup_classid(&skcd_buf) == classid)
 		return;

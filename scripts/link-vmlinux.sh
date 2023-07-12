@@ -92,6 +92,7 @@ modpost_link()
 vmlinux_link()
 {
 	local lds="${objtree}/${KBUILD_LDS}"
+	local objects
 
 	if [ "${SRCARCH}" != "um" ]; then
 		if [ -n "${CONFIG_THIN_ARCHIVES}" ]; then
@@ -190,6 +191,7 @@ cleanup()
 	rm -f .tmp_kallsyms*
 	rm -f .tmp_version
 	rm -f .tmp_vmlinux*
+	rm -f built-in.o
 	rm -f System.map
 	rm -f vmlinux
 	rm -f vmlinux.o

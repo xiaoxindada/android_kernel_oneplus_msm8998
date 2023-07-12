@@ -112,7 +112,6 @@ static void bpf_mt_destroy(const struct xt_mtdtor_param *par)
 static void bpf_mt_destroy_v1(const struct xt_mtdtor_param *par)
 {
 	const struct xt_bpf_info_v1 *info = par->matchinfo;
-
 	bpf_prog_destroy(info->filter);
 }
 
@@ -125,7 +124,6 @@ static struct xt_match bpf_mt_reg[] __read_mostly = {
 		.match		= bpf_mt,
 		.destroy	= bpf_mt_destroy,
 		.matchsize	= sizeof(struct xt_bpf_info),
-		.usersize	= offsetof(struct xt_bpf_info, filter),
 		.me		= THIS_MODULE,
 	},
 	{
@@ -136,7 +134,6 @@ static struct xt_match bpf_mt_reg[] __read_mostly = {
 		.match		= bpf_mt_v1,
 		.destroy	= bpf_mt_destroy_v1,
 		.matchsize	= sizeof(struct xt_bpf_info_v1),
-		.usersize	= offsetof(struct xt_bpf_info_v1, filter),
 		.me		= THIS_MODULE,
 	},
 };

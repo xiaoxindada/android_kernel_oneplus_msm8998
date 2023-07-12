@@ -47,7 +47,10 @@ struct bpf_map {
 	struct user_struct *user;
 	const struct bpf_map_ops *ops;
 	struct work_struct work;
+<<<<<<< HEAD
 	atomic_t usercnt;
+=======
+>>>>>>> a34ee431ff5b4a2d0d2af3def35fd7a3098d1dd1
 #ifdef CONFIG_SECURITY
 	void *security;
 #endif
